@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>PJG mainpage</title>
+  <meta name="viewport" content="height=device-height,width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <link href="css/lkh.css" media="all" rel="Stylesheet" type="text/css" />
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.oLoader.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+
+
+
+  <style>
+
+  </style>
+
+
+
+  <!-- 로딩 fadein  -->
+  <script>
+    $(document).ready(function() {
+
+      $('.contents_page,article,footer').css('display', 'none');
+
+      $('.contents_page,article,footer').delay(30).fadeIn(1000);
+
+      $('.loader').delay(3000).fadeOut(1000);
+
+      $('.link').click(function() {
+
+        event.preventDefault();
+
+        newLocation = this.href;
+
+        $('body').fadeOut(1000, newpage);
+
+      });
+
+      function newpage() {
+
+        window.location = newLocation;
+
+      }
+
+    });
+  </script>
+</head>
+
+<body id="body">
+
+  <!-- loader -->
+  <div class="loader">
+    <canvas width="480px" height="480px" id="loader"></canvas>
+    <h1>Loading</h1>
+  </div>
+
+  <div class="contents_page">
+    <!-- header -->
+    <header id="header_w">
+      <div class="navi_tap">
+        <div class="logo">
+          <a href="/" rel="main_page">logo</a>
+        </div>
+        <nav class="navigation">
+          <div class="menu-toggle">menu</div>
+          <ul>
+            <li>1.about</li>
+            <li>2.wolcome</li>
+            <li>3.goodbye</li>
+            <li>4.getout</li>
+            <li>5.wait</li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+
+
+    <!--article  -->
+
+
+    <article>
+      <!-- <section class="section_head"></section> -->
+      <section class="section">
+
+
+        <div class="tv">
+          <!-- <div class="screen mute" id="tv"></div> -->
+          <div class="tv_card">
+            <div class="container">
+            <ul>
+              <li>
+                <div class="card_b">test1</div>
+              </li>
+              <li>
+                <div class="card_b">test2</div>
+              </li>
+              <li>
+                <div class="card_b">test3</div>
+              </li>
+              <li>
+                <div class="card_b">test4</div>
+              </li>
+            </ul>
+            </div>
+          </div>
+        </div>
+
+
+      </section>
+    </article>
+    <footer>
+      <div class="f_bind">
+        <div class="f_logo">
+          <div class="f_logob">logo</div>
+        </div>
+        <div class="f_info">Maiores tempora, animi ea quae expedita nihil repellat ipsa natus quibusdam dolore. Reiciendis itaque optio, maiores, neque velit delectus quae aspernatur quibusdam repellendus numquam laboriosam amet voluptatum debitis non voluptates?</div>
+        <div class="f_social">
+          <div class="f_logob">logo</div>
+        </div>
+        <div class="f_bind">
+    </footer>
+    </div>
+
+    <!-- youtube 배경 -->
+    <script type="text/javascript">
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/player_api';
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      var tv,
+        playerDefaults = {
+          autoplay: 0,
+          autohide: 1,
+          modestbranding: 0,
+          rel: 0,
+          showinfo: 0,
+          controls: 0,
+          disablekb: 1,
+          enablejsapi: 0,
+          iv_load_policy: 3
+        };
+      var vid = [{
+            'videoId': 'NQeOQUT2EH0',
+            'startSeconds': 0,
+            'endSeconds': 16,
+            'suggestedQuality': 'hd720'
+          }, // nine worlds
+          {
+            'videoId': 'N0fNxpeTKfk',
+            'startSeconds': 0,
+            'endSeconds': 70,
+            'suggestedQuality': 'hd720'
+          }, // icebike adventures
+          {
+            'videoId': 'UTo3wULXo9w',
+            'startSeconds': 0,
+            'endSeconds': 81,
+            'suggestedQuality': 'hd720'
+          }, // reykjavik rocks
+        ],
+        randomvid = Math.floor(Math.random() * (vid.length - 1 + 1));
+
+      function onYouTubePlayerAPIReady() {
+        tv = new YT.Player('tv', {
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          },
+          playerVars: playerDefaults
+        });
+      }
+
+      function onPlayerReady() {
+        tv.loadVideoById(vid[randomvid]);
+        tv.mute();
+      }
+
+      function onPlayerStateChange(e) {
+        if (e.data === 1) {
+          $('#tv').addClass('active');
+        } else if (e.data === 0) {
+          tv.seekTo(vid[randomvid].startSeconds)
+        }
+      }
+
+      function vidRescale() {
+
+        var w = $(window).width() + 200,
+          h = $(window).height() + 200;
+
+        if (w / h > 16 / 9) {
+          tv.setSize(w, w / 16 * 9);
+          $('.tv .screen').css({
+            'left': '0px'
+          });
+        } else {
+          tv.setSize(h / 9 * 16, h);
+          $('.tv .screen').css({
+            'left': -($('.tv .screen').outerWidth() - w) / 2
+          });
+        }
+      }
+
+      $(window).on('load resize', function() {
+        vidRescale();
+      });
+
+      $('.hi span').on('click', function() {
+        $('#tv').toggleClass('mute');
+        if ($('#tv').hasClass('mute')) {
+          tv.mute();
+          $(this).siblings('i').html('unmute');
+        } else {
+          tv.unMute();
+          $(this).siblings('i').html('mute');
+        }
+      });
+    </script>
+    <script src='/js/loader.js'></script>
+</body>
+
+</html>
